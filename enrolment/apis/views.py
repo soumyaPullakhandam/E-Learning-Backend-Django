@@ -1,11 +1,20 @@
+from django.db.models import Avg
 from rest_framework import generics
 from rest_framework import permissions
+
+from course.models import Lecture
+from progress.models import Progress
 from ..models import Enrolment
-from .serializers import EnrolmentSerializers
+from .serializers import EnrolmentSerializers, EnrolmentUpdateSerializers
 
 
 def perform_action(self, serializer):
-    serializer.save(student=self.request.user)
+    new_enrol = serializer.save(student=self.request.user)
+    student = self.request.user
+    lectures = Lecture.objects.filter(topic__course=new_enrol.course)
+    for lecture in lectures:
+        Progress.objects.create(lecture=lecture, student=student)
+    return new_enrol
 
 
 def perform_query(self):
@@ -41,7 +50,17 @@ class EnrolmentList(generics.ListCreateAPIView):
 
 class EnrolmentUpdate(generics.RetrieveUpdateAPIView):
     permission_classes = [permissions.DjangoModelPermissions]
-    serializer_class = EnrolmentSerializers
+    serializer_class = EnrolmentUpdateSerializers
 
     def get_queryset(self):
         return perform_query(self)
+
+    def perform_update(self, serializer):
+        new_enrolment = serializer.save(student=self.request.user)
+        course = new_enrolment.course
+        enrol_rating = Enrolment.objects.filter(course=course.id)
+        course_rating = enrol_rating.aggregate(Avg('rating'))
+        course.rating = course_rating['rating__avg']
+        course.save()
+
+

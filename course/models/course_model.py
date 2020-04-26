@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from home.models import UserProfile
 from languages.fields import LanguageField
@@ -21,7 +21,7 @@ class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     duration = models.FloatField(blank=True, null=True)
-    rating = models.IntegerField(validators=[MaxValueValidator(10)], blank=True, null=True, default=0)
+    rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)], blank=True, null=True, default=0)
     language = LanguageField(max_length=20, default='en', blank=True, null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)

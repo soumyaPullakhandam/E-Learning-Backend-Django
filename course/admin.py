@@ -16,7 +16,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'language', 'pub_date', 'author', 'price', 'duration')
+    list_display = ('title', 'language', 'pub_date', 'author', 'rating', 'price', 'duration')
     list_filter = [
         ('author', admin.RelatedOnlyFieldListFilter)
     ]
