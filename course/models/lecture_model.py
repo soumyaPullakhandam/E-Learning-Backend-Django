@@ -1,13 +1,19 @@
 from django.db import models
-from .course_model import Course
-from home.models import UserProfile
 from .topic_model import Topic
+from .course_model import Course
+import django.utils.timezone
 
 
 def upload_lecture(instance, filename):
-    return "lecture/{user}/{course}/{filename}".format(user=instance.topic.course.author.username,
-                                                       course=instance.topic.course.title,
+    return "lecture/{user}/{course}/{filename}".format(user=instance.course.author.username,
+                                                       course=instance.course.title,
                                                        filename=filename)
+
+
+class LectureFile(models.Model):
+    file = models.FileField(upload_to=upload_lecture, blank=True, null=True)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=True, null=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
 
 class Lecture(models.Model):
@@ -15,8 +21,8 @@ class Lecture(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     duration = models.FloatField()
-    res_file = models.FileField(upload_to=upload_lecture, blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    lectureFile = models.ForeignKey(LectureFile, on_delete=models.CASCADE);
+    timestamp = models.DateTimeField(default=django.utils.timezone.now)
 
     def __str__(self):
         return self.title

@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='Enrolment',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('enrol_date', models.DateTimeField(auto_now_add=True)),
+                ('enrol_date', models.DateTimeField(auto_now_add=True, blank=True, null=True)),
                 ('completion', models.IntegerField(choices=[(1, 'True'), (2, 'False')], default=1)),
                 ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='course.Course')),
             ],

@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='Enrol',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('enrol_date', models.DateTimeField(auto_now_add=True)),
+                ('enrol_date', models.DateTimeField(auto_now_add=True, blank=True, null=True)),
                 ('completion', models.IntegerField()),
                 ('enrol', models.ManyToManyField(blank=True, through='course.Course', to=settings.AUTH_USER_MODEL)),
             ],

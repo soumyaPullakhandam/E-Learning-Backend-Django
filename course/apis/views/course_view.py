@@ -20,9 +20,12 @@ class CourseList(generics.ListAPIView):
     def get_queryset(self):
         queryset = Course.objects.all()
         author = self.request.query_params.get('author')
+        category = self.request.query_params.get('category')
 
         if author:
             queryset = queryset.filter(author=author)
+        if category:
+            queryset = queryset.filter(category__title__icontains=category)
 
         return queryset
 

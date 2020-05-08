@@ -24,7 +24,7 @@ SECRET_KEY = 'y4a@9b26cj0@9ndhwf9yb6qy0o#_1_zjw90(ny))pw!7w8ij0!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.179.122', '0.0.0.0']
 
 # Application definition
 
@@ -42,13 +42,15 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'course.apps.CourseConfig',
     'enrolment.apps.EnrolmentConfig',
-    'progress.apps.ProgressConfig'
+    'progress.apps.ProgressConfig',
+    'corsheaders',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -61,8 +63,7 @@ ROOT_URLCONF = 'ELearning.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,10 +81,21 @@ WSGI_APPLICATION = 'ELearning.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'E-Learning_db',
+        'USER': 'soumya',
+        'PASSWORD': 'nextapp',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -130,5 +142,7 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-server')
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'home.UserProfile'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 from .restconf.main import *

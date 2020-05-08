@@ -13,6 +13,15 @@ class NestedList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
 
+    def get_queryset(self):
+        queryset = Topic.objects.all()
+        course = self.request.query_params.get('course')
+
+        if course:
+            queryset = queryset.filter(course=course)
+
+        return queryset
+
 
 class NestedUpdate(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly, IsOwnerOrReadOnlyLec]
