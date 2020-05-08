@@ -3,7 +3,7 @@ from .models import Progress
 
 
 class ProgressAdmin(admin.ModelAdmin):
-    list_display = ('lecture', 'student', 'completion', 'timestamp')
+    list_display = ['lecture', 'student', 'completion', 'timestamp']
     list_filter = [
         ('lecture', admin.RelatedOnlyFieldListFilter),
         ('student', admin.RelatedOnlyFieldListFilter)

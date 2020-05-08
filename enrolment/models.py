@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+import django.utils.timezone
 
 from home.models import UserProfile
 from course.models import Course
@@ -8,7 +9,7 @@ from course.models import Course
 class Enrolment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, unique=False)
     student = models.ForeignKey(UserProfile, on_delete=models.CASCADE, unique=False)
-    enrol_date = models.DateTimeField(auto_now_add=True)
+    enrol_date = models.DateTimeField(default=django.utils.timezone.now)
     rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)], blank=True, null=True,
                                  default=0)
     completion = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)], blank=True, null=True,

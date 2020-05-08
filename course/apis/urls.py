@@ -8,6 +8,8 @@ from .views import CourseList, \
     TopicUpdate, \
     LectureList, \
     LectureUpdate, \
+    LectureFileList, \
+    LectureFileUpdate, \
     NestedList, \
     NestedUpdate
 
@@ -20,6 +22,8 @@ urlpatterns = [
     path('topic/<int:pk>/', TopicUpdate.as_view(), name='Topic-update'),
     path('lecture/', LectureList.as_view(), name='Lecture-list'),
     path('lecture/<int:pk>/', LectureUpdate.as_view(), name='Lecture-update'),
+    path('lecturefile/', LectureFileList.as_view(), name='Lecturefile-list'),
+    path('lecturefile/<int:pk>/', LectureFileUpdate.as_view(), name='Lecturefile-update'),
     path('batch/', NestedList.as_view(), name='batchLearn-list'),
     path('batch/<int:pk>/', NestedUpdate.as_view(), name='batchLearn-update'),
 ]

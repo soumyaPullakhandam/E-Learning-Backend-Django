@@ -30,6 +30,7 @@ class CourseListSerializers(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['author', 'author_name', 'language_name', 'duration', 'rating']
 
+
 # from rest_framework.serializers import ModelSerializer, RelatedField
 # class CategoryRelatedField(serializers.RelatedField):
 #     def to_representation(self, obj):

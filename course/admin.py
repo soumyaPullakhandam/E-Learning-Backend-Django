@@ -1,12 +1,10 @@
 from django.contrib import admin
-from .models import Course, Topic, Lecture, Category
+from .models import Course, Topic, Lecture, Category, LectureFile
 
 
 class LectureAdmin(admin.ModelAdmin):
-    list_display = ('title', 'duration', 'res_file', 'topic')
+    list_display = ('title', 'duration', 'topic')
     list_filter = [
-        # ('author', admin.RelatedOnlyFieldListFilter),
-        # ('course', admin.RelatedOnlyFieldListFilter),
         ('topic', admin.RelatedOnlyFieldListFilter)
     ]
 
@@ -38,3 +36,4 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Course, CourseAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Lecture, LectureAdmin)
+admin.site.register(LectureFile)
